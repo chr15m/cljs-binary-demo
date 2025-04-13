@@ -2,6 +2,8 @@
 
 This repository demonstrates how to compile an [nbb](https://github.com/babashka/nbb) ClojureScript script into a single executable binary.
 
+It uses the techniques described in [nbb/doc/bundle](https://github.com/babashka/nbb/tree/main/doc/bundle).
+
 It compiles `helloworld.cljs` into a single binary called `helloworld`.
 This binary can be run on any system with Node 18 or greater installed.
 Invoke it with `./helloworld`.
