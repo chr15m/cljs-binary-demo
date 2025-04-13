@@ -1,4 +1,4 @@
-# NBB Single Binary Demo
+# Single Binary ClojureScript Demo
 
 This repository demonstrates how to compile an [nbb](https://github.com/babashka/nbb) ClojureScript script into a single executable binary.
 
