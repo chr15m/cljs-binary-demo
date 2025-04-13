@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@vercel/ncc": "^0.38.3",
+    "nbb": "^1.3.196"
+  },
+  "scripts": {
+    "build-mjs": "nbb bundle helloworld.cljs -o helloworld.mjs",
+    "build-single": "npx ncc build helloworld.mjs -m",
+    "build-binary": "echo '#!/usr/bin/env -S node --experimental-default-type=module' > helloworld; cat dist/index.mjs >> helloworld; chmod 755 helloworld",
+    "build": "npm run build-mjs; npm run build-single; npm run build-binary"
+  },
+  "devDependencies": {
+    "express": "^5.1.0"
+  }
+}
