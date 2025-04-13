@@ -2,7 +2,8 @@
   (:require
     [nbb.core :refer [*file*]]
     [clojure.tools.cli :as cli]
-    ["fs" :as fs]))
+    ["fs" :as fs]
+    ["express$default" :as express]))
 
 (defn fib-seq []
   (map first (iterate (fn [[a b]] [b (+ a b)]) [0 1])))
@@ -14,6 +15,12 @@
   (print "Program options:")
   (print summary))
 
+(defn start-server []
+  (let [app (express)
+        port 3000]
+    (.get app "/" (fn [_req res] (.send res "Hello world"))) ; Simple route
+    (.listen app port (fn [] (print (str "Server listening on port " port)))))) ; Start server
+
 (def cli-options
   [["-f" "--fib N" "Calculate Fibonacci sequence up to N."
     :parse-fn #(js/parseInt %)
@@ -21,6 +28,7 @@
    ["-s" "--filesize FILE" "Show the size of FILE in bytes."
     :parse-fn #(str %)
     :validate [#(string? %) "Path to FILE must be a string."]]
+   ["-S" "--serve" "Start a simple web server."] ; Added --serve option
    ["-h" "--help"]])
 
 (defn -main [& args]
@@ -29,15 +37,22 @@
       errors
       (doseq [e errors]
         (print e))
+
       (:help options)
       (print-usage summary)
+
+      (:serve options)
+      (start-server)
+
       (:fib options)
       (print
         (str "Fibonacci sequence up to "
              (:fib options) ": "
              (fib-up-to (:fib options))))
+
       (:filesize options)
       (print (-> (fs/readFileSync (:filesize options)) .-length))
+
       :else
       (print-usage summary))))
 
