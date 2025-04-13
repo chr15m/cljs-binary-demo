@@ -17,7 +17,7 @@
 
 (defn start-server []
   (let [app (express)
-        port 3000]
+        port 8000]
     (.get app "/" (fn [_req res] (.send res "Hello world"))) ; Simple route
     (.listen app port (fn [] (print (str "Server listening on port " port)))))) ; Start server
 
